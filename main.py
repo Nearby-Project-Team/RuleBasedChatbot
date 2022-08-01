@@ -5,7 +5,7 @@ from dto.chattingDto import ChattingDto
 
 app = FastAPI()
 chatModel = getChatbotModel([
-                            "chatterbot.corpus.korean"
+                                "chatterbot.corpus.korean"
                             ])
 
 @app.post('/chat')
