@@ -1,7 +1,16 @@
+from tkinter.tix import Tree
 from storage_repository import StorageRepositoryEntity
 from exceptions.storage_exception import StoreException
-from dto.notificationType import NotificationType
-import cronex
+from dto.notification_type import NotificationType
+from datetime import datetime as dt
+from cron_converter import Cron
+from pytz import timezone
+
+'''
+Date의 경우, 다음과 같으s Format으로만 들어온다고 가정한다.
+YYYY-MM-DD HH:MM
+'''
+TZ = timezone('Asia/Seoul')
 
 class CalandarRepository(StorageRepositoryEntity):
     
@@ -19,9 +28,9 @@ class CalandarRepository(StorageRepositoryEntity):
         if notificationType == NotificationType.ONEOFF:
             dateCondition = "ScheduleDate"
             if sdate:
-                dateCondition = "{} <= ".format(sdate) + dateCondition
+                dateCondition = "'{}' <= ".format(sdate) + dateCondition
             if edate:
-                dateCondition = dateCondition + " <= {}".format(edate) 
+                dateCondition = dateCondition + " <= '{}'".format(edate) 
             query = 'SELECT {} FROM Calandar WHERE elderly_id={} AND {} AND notificationType=ONEOFF'.format(selectedColumns, elderly_id, dateCondition)
         elif notificationType == NotificationType.REPEAT:
             query = 'SELECT {} FROM Calandar WHERE elderly_id={} AND notificationType=REPEATATION'.format(selectedColumns, elderly_id)
@@ -29,20 +38,30 @@ class CalandarRepository(StorageRepositoryEntity):
             query = 'SELECT {} FROM Calandar WHERE elderly_id={}'.format(selectedColumns, elderly_id)
         return query
     
-    def getDateRegex2NowTime(self, regex):
-        
-        pass
+    def getIsNextInTime(self, regex: str, sdate: str, edate: str):
+        s = TZ.localize(dt.strptime(sdate, "%Y-%m-%d %H:%M")) 
+        e = TZ.localize(dt.strptime(edate, "%Y-%m-%d %H:%M"))
+        cron = Cron(regex)
+        schedule = cron.schedule(start_date=s)
+        nSchedule = schedule.next()
+        if e < nSchedule:
+            return False
+        else :
+            return nSchedule
     
     def getOneSideCalandarInfo(self, elderly_id: str, sdate: str, edate: str, notificationType: NotificationType):
         try:
             c = self.conn.cursor()
             c.execute(self.dateQueryBuilder(elderly_id=elderly_id, sdate=sdate, edate=edate, notificationType=notificationType))
+            calandarList = c.fetchall()
+            repeat = []
             if notificationType == NotificationType.REPEAT:
-                
-                pass
-            return c.fetchall()
+                for content, date in calandarList:
+                    nSche = self.getIsNextInTime(date, sdate, edate)
+                    if nSche:
+                        repeat.append((content, nSche))
+            return repeat
         except Exception as e:
-            print(e.with_traceback())
             raise StoreException("Error in reading {} user's calandar data".format(elderly_id))
     
     def getBothSideCalandarInfo(self, elderly_id: str, sdate: str, edate: str):
@@ -56,10 +75,11 @@ class CalandarRepository(StorageRepositoryEntity):
                 if noti_type == NotificationType.ONEOFF:
                     one_off.append((content, date))
                 elif noti_type == NotificationType.REPEAT:
-                    
-                    pass
+                    nSche = self.getIsNextInTime(date, sdate, edate)
+                    if nSche:
+                        repeat.append((content, nSche))
                 else :
                     raise StoreException("Invalid Date Format for QueryBuilder!")
+            return one_off, repeat
         except Exception as e:
-            print(e.with_traceback())
             raise StoreException("Error in reading {} user's calandar data".format(elderly_id))
