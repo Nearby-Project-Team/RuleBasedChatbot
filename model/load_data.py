@@ -1,6 +1,5 @@
 import json
 import os
-from typing import List 
 
 DATA_PATH = os.path.join(os.path.abspath(), '../chatbot_data')
 DATA_LIST = os.listdir(DATA_PATH)
