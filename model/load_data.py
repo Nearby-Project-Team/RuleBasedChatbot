@@ -6,5 +6,6 @@ DATA_LIST = os.listdir(DATA_PATH)
 DATA_DICT = { key : DATA_PATH + '/' + key for key in DATA_LIST }
 
 def loadData(dataType: str):
-    data = json.load(DATA_DICT[dataType])
+    file = open(DATA_DICT[dataType])
+    data = json.load(file)
     return data

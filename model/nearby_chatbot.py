@@ -24,9 +24,8 @@ class NearbyLogic:
         )
         
     def can_process(self, statement: str):
-        content: str = statement.text
         for func in self.functionList:
-            if not func(content):
+            if not func(statement):
                 return False                
         return True
     
