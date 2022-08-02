@@ -1,5 +1,5 @@
 from exceptions.storage_exception import StoreException
-from connection import getMySQLConnection
+from .connection import getMySQLConnection
 
 class StorageRepositoryEntity():
     def __init__(self, host, port, username, password, db):
@@ -12,7 +12,7 @@ class StorageRepositoryEntity():
                 db=db
             )
         except Exception as e:
-            raise StoreException(*e.args, **e.kwargs)
+            raise StoreException("Cannot connect to DB")
         self._complete = False
 
     def __enter__(self):

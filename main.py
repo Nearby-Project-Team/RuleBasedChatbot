@@ -1,8 +1,8 @@
 from requests import request
 from model.ai_chatbot import getChatbotModel
 from model.nearby_chatbot import NearbyLogic
-from fastapi import FastAPI
 from dto.chatting_dto import ChattingDto
+from fastapi import FastAPI
 
 app = FastAPI()
 AIChatModel = getChatbotModel([

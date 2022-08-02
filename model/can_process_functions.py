@@ -1,6 +1,5 @@
-from xmlrpc.client import Boolean
 import regex as re
-from load_data import loadData
+from .load_data import loadData
 
 def isScheduleValidator(text: str):
     data = loadData("data-work.json")

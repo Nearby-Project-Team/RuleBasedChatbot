@@ -1,5 +1,5 @@
 from datetime import datetime
-from load_data import loadData
+from .load_data import loadData
 import regex as re
 
 class TimeBuilder:

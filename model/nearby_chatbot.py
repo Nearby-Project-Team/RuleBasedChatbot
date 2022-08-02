@@ -1,5 +1,5 @@
 from database.mysql_repository import CalandarRepository
-import can_process_functions as preFunctions
+from . import can_process_functions as preFunctions
 from model.time_builder import TimeBuilder
 import configparser
 import os 
@@ -12,12 +12,12 @@ class NearbyLogic:
             if callable(con):
                 self.functionList.append(con)
 
-        config_path = os.path.join(os.path.abspath(), "../config.ini")
+        config_path = os.path.join(os.path.abspath('./'), "config.ini")
         config = configparser.ConfigParser()
         config.read(config_path)
         self.calendar = CalandarRepository(
             host=config["database"]["host"],
-            port=config["database"]["port"],
+            port=int(config["database"]["port"]),
             username=config["database"]["username"],
             password=config["database"]["password"],
             db=config["database"]["database"]
