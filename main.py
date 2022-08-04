@@ -1,4 +1,3 @@
-from requests import request
 from model.ai_chatbot import getChatbotModel
 from model.nearby_chatbot import NearbyLogic
 from dto.chatting_dto import ChattingDto
