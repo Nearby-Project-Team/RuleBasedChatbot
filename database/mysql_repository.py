@@ -16,9 +16,9 @@ class CalandarRepository(StorageRepositoryEntity):
     def dateQueryBuilder(self, elderly_id: str, sdate: str, edate: str, notificationType: NotificationType):
         selectedColumns = ""
         if notificationType:
-            selectedColumns += "content, ScheduleDate"
+            selectedColumns += "contents, ScheduleDate"
         else :
-            selectedColumns += "content, ScheduleDate, notificationType"
+            selectedColumns += "contents, ScheduleDate, notificationType"
         
         if (not sdate) and (not edate) and (notificationType == NotificationType.ONEOFF):
             raise StoreException("Invalid Date Format for QueryBuilder!")
@@ -71,9 +71,10 @@ class CalandarRepository(StorageRepositoryEntity):
             one_off = []
             repeat = []
             for content, date, noti_type in calandarList:
-                if noti_type == NotificationType.ONEOFF:
+                print(content, date, noti_type)
+                if noti_type == NotificationType.ONEOFF.value:
                     one_off.append((content, date))
-                elif noti_type == NotificationType.REPEAT:
+                elif noti_type == NotificationType.REPEAT.value:
                     nSche = self.getIsNextInTime(date, sdate, edate)
                     if nSche:
                         repeat.append((content, nSche))

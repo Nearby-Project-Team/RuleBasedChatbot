@@ -38,10 +38,13 @@ class NearbyLogic:
         if not res:
             return "잘 모르겠어요."
         s, e = res
-        contentList = self.calendar.getBothSideCalandarInfo(elderly_id, s, e)
+        oneOff, Repeat = self.calendar.getBothSideCalandarInfo(elderly_id, s, e)
         result = "원하시던 요청은 "
-        for con in contentList:
+        for con in oneOff:
             text, time = con
-            result += time.isoformat(timespec='auto') + "의 시간에 " + text + " "
+            result += time + "의 시간에 " + text + " "
+        for con in Repeat:
+            text, time = con
+            result += time + "의 시간에 " + text + " "
         result += "입니다."
         return result
