@@ -1,5 +1,5 @@
 from database.mysql_repository import CalandarRepository
-from . import can_process_functions as preFunctions
+from . import can_process_functions
 from model.time_builder import TimeBuilder
 import configparser
 import os 
@@ -8,9 +8,9 @@ class NearbyLogic:
 
     def __init__(self):    
         self.functionList = []
-        for con in dir(preFunctions):
-            if callable(con):
-                self.functionList.append(con)
+        for con in dir(can_process_functions):
+            if callable(getattr(can_process_functions, con)) and not (con == "loadData"):
+                self.functionList.append(getattr(can_process_functions, con))
 
         config_path = os.path.join(os.path.abspath('./'), "config.ini")
         config = configparser.ConfigParser()
@@ -26,7 +26,7 @@ class NearbyLogic:
     def can_process(self, statement: str):
         for func in self.functionList:
             if not func(statement):
-                return False                
+                return False
         return True
     
     def process(self, statement: str, elderly_id: str):

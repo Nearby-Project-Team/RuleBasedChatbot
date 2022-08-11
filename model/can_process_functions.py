@@ -2,9 +2,11 @@ import regex as re
 from .load_data import loadData
 
 def isScheduleValidator(text: str):
-    data = loadData("data-work.json")
+    data = loadData("data-work-list.json")
     for con in data:
-        if re.search(text, con):
+        res = re.findall(con, text)
+        print(res)
+        if res:
             return True
     return False
 
