@@ -18,7 +18,7 @@ def Joke(host, port, username, password, db):
                 elif _c == "2":
                     data = jRepository.listAllJoke()
                     for con in data:
-                        print("ID: ", con[0], " , Joke: ", con[1])
+                        print("ID:", con[0], ", Joke:", con[1])
                 else :
                     raise ValueError("Invalid Command") 
         except KeyboardInterrupt:
@@ -37,7 +37,7 @@ def Fortune(host, port, username, password, db):
                 elif _c == "2":
                     data = fRepository.listAllFortune()
                     for con in data:
-                        print("ID: ", con[0], " , Fortune: ", con[1])
+                        print("ID:", con[0], ", Fortune:", con[1])
                 else :
                     raise ValueError("Invalid Command")
         except KeyboardInterrupt:
@@ -57,7 +57,7 @@ def Alarm(host, port, username, password, db):
                 elif _c == "2":
                     data = aRepository.listAllAlarm()
                     for con in data:
-                        print("ID: ", con[0], " , Alarm: ", con[1], " , Alarm Type: ", con[2])
+                        print("ID:", con[0], ", Alarm:", con[1], ", Alarm Type:", con[2])
                 else :
                     raise ValueError("Invalid Command")
         except KeyboardInterrupt:

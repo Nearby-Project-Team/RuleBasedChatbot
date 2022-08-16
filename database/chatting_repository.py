@@ -50,7 +50,7 @@ class FortuneRepository(StorageRepositoryEntity):
     def listAllFortune(self):
         try:
             c = self.conn.cursor()
-            c.execute('SELECT * FROM Joke;')
+            c.execute('SELECT * FROM Fortune;')
             return c.fetchall()
         except Exception as e:
             raise StoreException("Cannot fetch data from the DB")
@@ -77,7 +77,7 @@ class AlarmRepository(StorageRepositoryEntity):
     def listAllAlarm(self):
         try:
             c = self.conn.cursor()
-            c.execute('SELECT * FROM Joke;')
+            c.execute('SELECT * FROM Alarm;')
             return c.fetchall()
         except Exception as e:
             raise StoreException("Cannot fetch data from the DB")
