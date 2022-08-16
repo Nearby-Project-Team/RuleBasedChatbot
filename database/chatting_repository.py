@@ -8,7 +8,7 @@ class JokeRepository(StorageRepositoryEntity):
     def createTable(self):
         try:
             c = self.conn.cursor()
-            c.execute('CREATE TABLE Joke(uuid varchar(100) not null primary key \
+            c.execute('CREATE TABLE Joke(uuid varchar(100) not null primary key, \
                                          joke TEXT not null);')
         except Exception as e:
             raise StoreException("Cannot create table")
@@ -34,7 +34,7 @@ class FortuneRepository(StorageRepositoryEntity):
     def createTable(self):
         try:
             c = self.conn.cursor()
-            c.execute('CREATE TABLE Fortune(uuid varchar(100) not null primary key \
+            c.execute('CREATE TABLE Fortune(uuid varchar(100) not null primary key, \
                                             fortune TEXT not null);')
         except Exception as e:
             raise StoreException("Cannot create table")
@@ -60,8 +60,8 @@ class AlarmRepository(StorageRepositoryEntity):
     def createTable(self):
         try:
             c = self.conn.cursor()
-            c.execute('CREATE TABLE Alarm(uuid varchar(100) not null primary key \
-                                          alarm TEXT not null \
+            c.execute('CREATE TABLE Alarm(uuid varchar(100) not null primary key, \
+                                          alarm TEXT not null, \
                                           alarm_type varchar(255) not null)')
         except Exception as e:
             raise StoreException("Cannot create table")

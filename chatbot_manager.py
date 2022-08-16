@@ -1,4 +1,4 @@
-from .database.chatting_repository import JokeRepository, FortuneRepository, AlarmRepository
+from database.chatting_repository import JokeRepository, FortuneRepository, AlarmRepository
 import configparser
 import argparse
 import os 
@@ -67,14 +67,41 @@ def Alarm(host, port, username, password, db):
 if __name__ == "__main__":
     args = parser.parse_args()
     table = args.table
+    if table is None:
+        raise ValueError("Invalid Table Type!")
     config_path = os.path.join(os.path.abspath('./'), "config.ini")
     config = configparser.ConfigParser()
     config.read(config_path)
     print("Enter {}s to make data".format(table))
     print("Command 1 > Insert Data into the DB")
     print("Command 2 > List up data in the DB")
+    if table == "create":
+        with JokeRepository(host=config["chatbot"]["host"],
+            port=int(config["chatbot"]["port"]),
+            username=config["chatbot"]["username"],
+            password=config["chatbot"]["password"],
+            db=config["chatbot"]["database"]
+        ) as jRepository:
+            jRepository.createTable()
+            jRepository.complete()
+        with FortuneRepository(host=config["chatbot"]["host"],
+            port=int(config["chatbot"]["port"]),
+            username=config["chatbot"]["username"],
+            password=config["chatbot"]["password"],
+            db=config["chatbot"]["database"]
+        ) as fRepository:
+            fRepository.createTable()
+            fRepository.complete()
+        with AlarmRepository(host=config["chatbot"]["host"],
+            port=int(config["chatbot"]["port"]),
+            username=config["chatbot"]["username"],
+            password=config["chatbot"]["password"],
+            db=config["chatbot"]["database"]
+        ) as aRepository:
+            aRepository.createTable()
+            aRepository.complete()
     if table == "joke":
-        Joke(host=["chatbot"]["host"],
+        Joke(host=config["chatbot"]["host"],
             port=int(config["chatbot"]["port"]),
             username=config["chatbot"]["username"],
             password=config["chatbot"]["password"],
