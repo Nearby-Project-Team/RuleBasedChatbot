@@ -92,11 +92,11 @@ if __name__ == "__main__":
         ) as fRepository:
             fRepository.createTable()
             fRepository.complete()
-        with AlarmRepository(host=config["chatbot"]["host"],
-            port=int(config["chatbot"]["port"]),
-            username=config["chatbot"]["username"],
-            password=config["chatbot"]["password"],
-            db=config["chatbot"]["database"]
+        with AlarmRepository(host=config["database"]["host"],
+            port=int(config["database"]["port"]),
+            username=config["database"]["username"],
+            password=config["database"]["password"],
+            db=config["database"]["database"]
         ) as aRepository:
             aRepository.createTable()
             aRepository.complete()
@@ -115,9 +115,9 @@ if __name__ == "__main__":
             db=config["chatbot"]["database"]
         )
     if table == "alarm":
-        Alarm(host=config["chatbot"]["host"],
-            port=int(config["chatbot"]["port"]),
-            username=config["chatbot"]["username"],
-            password=config["chatbot"]["password"],
-            db=config["chatbot"]["database"]
+        Alarm(host=config["database"]["host"],
+            port=int(config["database"]["port"]),
+            username=config["database"]["username"],
+            password=config["database"]["password"],
+            db=config["database"]["database"]
         )

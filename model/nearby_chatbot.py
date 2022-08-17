@@ -1,6 +1,8 @@
 from database.mysql_repository import CalandarRepository
+from database.chatting_repository import JokeRepository, FortuneRepository, AlarmRepository
 from . import can_process_functions
 from model.time_builder import TimeBuilder
+from datetime import datetime
 import configparser
 import os 
 
@@ -22,7 +24,32 @@ class NearbyLogic:
             password=config["database"]["password"],
             db=config["database"]["database"]
         )
+        self.joke = JokeRepository(
+            host=config["chatbot"]["host"],
+            port=int(config["chatbot"]["port"]),
+            username=config["chatbot"]["username"],
+            password=config["chatbot"]["password"],
+            db=config["chatbot"]["database"]
+        )
+        self.fortune = FortuneRepository(
+            host=config["chatbot"]["host"],
+            port=int(config["chatbot"]["port"]),
+            username=config["chatbot"]["username"],
+            password=config["chatbot"]["password"],
+            db=config["chatbot"]["database"]
+        )
+        self.alarm = AlarmRepository(
+            host=config["database"]["host"],
+            port=int(config["database"]["port"]),
+            username=config["database"]["username"],
+            password=config["database"]["password"],
+            db=config["database"]["database"]
+        )
+    
+    def date_preprocessing(self, time: str):
         
+        pass
+    
     def can_process(self, statement: str):
         for func in self.functionList:
             if not func(statement):
@@ -42,9 +69,9 @@ class NearbyLogic:
         result = "원하시던 요청은 "
         for con in oneOff:
             text, time = con
-            result += time + "의 시간에 " + text + " "
+            result += time + "에 " + text + " "
         for con in Repeat:
             text, time = con
-            result += time + "의 시간에 " + text + " "
+            result += time + "에 " + text + " "
         result += "입니다."
         return result

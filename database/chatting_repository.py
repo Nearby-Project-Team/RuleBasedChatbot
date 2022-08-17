@@ -8,7 +8,7 @@ class JokeRepository(StorageRepositoryEntity):
     def createTable(self):
         try:
             c = self.conn.cursor()
-            c.execute('CREATE TABLE Joke(uuid varchar(100) not null primary key, \
+            c.execute('CREATE TABLE Joke(uuid varchar(36) not null primary key, \
                                          joke TEXT not null);')
         except Exception as e:
             raise StoreException("Cannot create table")
@@ -16,7 +16,7 @@ class JokeRepository(StorageRepositoryEntity):
     def insertJoke(self, statement):
         try:
             c = self.conn.cursor()
-            joke_id = uuid4().hex
+            joke_id = str(uuid4())
             c.execute('INSERT INTO Joke(uuid, joke) VALUES("{}", "{}")'.format(joke_id, statement))
         except Exception as e:
             raise StoreException("Cannot insert data into the Joke Table")
@@ -34,7 +34,7 @@ class FortuneRepository(StorageRepositoryEntity):
     def createTable(self):
         try:
             c = self.conn.cursor()
-            c.execute('CREATE TABLE Fortune(uuid varchar(100) not null primary key, \
+            c.execute('CREATE TABLE Fortune(uuid varchar(36) not null primary key, \
                                             fortune TEXT not null);')
         except Exception as e:
             raise StoreException("Cannot create table")
@@ -42,7 +42,7 @@ class FortuneRepository(StorageRepositoryEntity):
     def insertFortune(self, statement):
         try:
             c = self.conn.cursor()
-            fortune_id = uuid4().hex
+            fortune_id = str(uuid4())
             c.execute('INSERT INTO Fortune(uuid, fortune) VALUES("{}", "{}")'.format(fortune_id, statement))
         except Exception as e:
             raise StoreException("Cannot insert data into the Fortune Table")
@@ -60,7 +60,7 @@ class AlarmRepository(StorageRepositoryEntity):
     def createTable(self):
         try:
             c = self.conn.cursor()
-            c.execute('CREATE TABLE Alarm(uuid varchar(100) not null primary key, \
+            c.execute('CREATE TABLE Alarm(uuid varchar(36) not null primary key, \
                                           alarm TEXT not null, \
                                           alarm_type varchar(255) not null)')
         except Exception as e:
@@ -69,7 +69,7 @@ class AlarmRepository(StorageRepositoryEntity):
     def insertAlarm(self, statement, alert_type):
         try:
             c = self.conn.cursor()
-            alarm_id = uuid4().hex
+            alarm_id = str(uuid4())
             c.execute('INSERT INTO Alarm(uuid, alarm, alarm_type) VALUES("{}", "{}", "{}")'.format(alarm_id, statement, alert_type))
         except Exception as e:
             raise StoreException("Cannot insert data into the Alarm Table")
