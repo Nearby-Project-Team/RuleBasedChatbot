@@ -89,4 +89,4 @@ class NearbyLogic:
             _j = random.choice(joke)
             return _j[1]
         
-           
+        
