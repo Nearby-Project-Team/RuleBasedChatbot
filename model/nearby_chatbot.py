@@ -4,6 +4,7 @@ from . import can_process_functions
 from model.time_builder import TimeBuilder
 from datetime import datetime
 import configparser
+import requests
 import random
 import os 
 
@@ -89,4 +90,11 @@ class NearbyLogic:
             _j = random.choice(joke)
             return _j[1]
         
+        if can_process_functions.isFourtuneValidator(statement):
+            fortune = self.fortune.listAllFortune()
+            _f = random.choice(fortune)
+            return _f[1]
         
+        if can_process_functions.isWeatherValidator(statement):
+            _w = requests.get('')
+            
