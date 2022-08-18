@@ -53,9 +53,9 @@ class NearbyLogic:
     
     def can_process(self, statement: str):
         for func in self.functionList:
-            if not func(statement):
-                return False
-        return True
+            if func(statement):
+                return True
+        return False
     
     def process(self, statement: str, elderly_id: str):
         if not self.can_process(statement):
