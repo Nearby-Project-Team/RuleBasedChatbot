@@ -4,6 +4,7 @@ from . import can_process_functions
 from model.time_builder import TimeBuilder
 from datetime import datetime
 import configparser
+import random
 import os 
 
 class NearbyLogic:
@@ -47,8 +48,8 @@ class NearbyLogic:
         )
     
     def date_preprocessing(self, time: str):
-        
-        pass
+        _t = datetime.strptime(time, "%Y-%m-%d %H:%M")
+        return str(_t.month) + "월 " + str(_t.day) + "일 " + str(_t.hour) + "시 " + str(_t.minute) + "분 "
     
     def can_process(self, statement: str):
         for func in self.functionList:
@@ -60,18 +61,32 @@ class NearbyLogic:
         if not self.can_process(statement):
             return "잘 모르겠어요."
         
-        timeBuilder = TimeBuilder(statement)
-        res = timeBuilder.process()
-        if not res:
-            return "잘 모르겠어요."
-        s, e = res
-        oneOff, Repeat = self.calendar.getBothSideCalandarInfo(elderly_id, s, e)
-        result = "원하시던 요청은 "
-        for con in oneOff:
-            text, time = con
-            result += time + "에 " + text + " "
-        for con in Repeat:
-            text, time = con
-            result += time + "에 " + text + " "
-        result += "입니다."
-        return result
+        if can_process_functions.isScheduleValidator(statement):
+            timeBuilder = TimeBuilder(statement)
+            res = timeBuilder.process()
+            if not res:
+                return "잘 모르겠어요."
+            s, e = res
+            oneOff, Repeat = self.calendar.getBothSideCalandarInfo(elderly_id, s, e)
+            result = "원하시던 요청은 "
+            for con in oneOff:
+                text, time = con
+                time_data = self.date_preprocessing(time)
+                result += time_data + "에 " + text + " "
+            for con in Repeat:
+                text, time = con
+                time_data = self.date_preprocessing(time)
+                result += time_data + "에 " + text + " "
+            result += "입니다."
+            return result
+        
+        if can_process_functions.isTimeValidator(statement):
+            now = datetime.now().strftime("%Y-%m-%d %H:%M")
+            return "지금은 " + self.date_preprocessing(now) + " 입니다."
+        
+        if can_process_functions.isJokeValidator(statement):
+            joke = self.joke.listAllJoke()
+            _j = random.choice(joke)
+            return _j[1]
+        
+           
