@@ -13,7 +13,7 @@ class NearbyLogic:
     def __init__(self):    
         self.functionList = []
         for con in dir(can_process_functions):
-            if callable(getattr(can_process_functions, con)) and not (con == "loadData"):
+            if callable(getattr(can_process_functions, con)) and not (con == "loadData") and not (con == "isStringMatch"):
                 self.functionList.append(getattr(can_process_functions, con))
         
         self.chatbotUrl = "http://localhost:5000/predictions/chatbot"
