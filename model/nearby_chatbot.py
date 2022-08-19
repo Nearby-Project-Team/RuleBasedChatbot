@@ -97,4 +97,6 @@ class NearbyLogic:
         
         if can_process_functions.isWeatherValidator(statement):
             _w = requests.get('')
-            
+            api_key = "api_key"
+            # need gps infomation!
+            return "FAIL"
