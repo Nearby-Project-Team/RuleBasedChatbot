@@ -15,7 +15,9 @@ class NearbyLogic:
         for con in dir(can_process_functions):
             if callable(getattr(can_process_functions, con)) and not (con == "loadData"):
                 self.functionList.append(getattr(can_process_functions, con))
-
+        
+        self.chatbotUrl = "http://localhost:5000/predictions/chatbot"
+        self.session = requests.session()
         config_path = os.path.join(os.path.abspath('./'), "config.ini")
         config = configparser.ConfigParser()
         config.read(config_path)
@@ -60,7 +62,12 @@ class NearbyLogic:
     
     def process(self, statement: str, elderly_id: str):
         if not self.can_process(statement):
-            return "잘 모르겠어요."
+            chat_data = { 'data': statement }
+            response = self.session.post(self.chatbotUrl, data=chat_data)
+            _res = response.content.decode('utf-8')
+            if len(_res) >= 60:
+                return "잘 모르겠어요." 
+            return _res
         
         if can_process_functions.isScheduleValidator(statement):
             timeBuilder = TimeBuilder(statement)
