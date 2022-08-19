@@ -52,7 +52,7 @@ class NearbyLogic:
     
     def date_preprocessing(self, time: str):
         _t = datetime.strptime(time, "%Y-%m-%d %H:%M")
-        return str(_t.month) + "월 " + str(_t.day) + "일 " + str(_t.hour) + "시 " + str(_t.minute) + "분 "
+        return str(_t.month) + "월 " + str(_t.day) + "일 " + str(_t.hour) + "시 " + str(_t.minute) + "분"
     
     def can_process(self, statement: str):
         for func in self.functionList:
