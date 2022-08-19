@@ -89,4 +89,18 @@ class NearbyLogic:
             _j = random.choice(joke)
             return _j[1]
         
+        if can_process_functions.isFourtuneValidator(statement):
+            fortune = self.fortune.listAllFortune()
+            _f = random.choice(fortune)
+            return _f[0]
+        
+        if can_process_functions.isWeatherValidator(statement):
+            api_key = "api_key"
+            # need gps infomation!
+            return "FAIL"
+        
+
+        
+
+        
         
