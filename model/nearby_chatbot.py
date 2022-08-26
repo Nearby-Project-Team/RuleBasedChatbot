@@ -103,7 +103,6 @@ class NearbyLogic:
             return _f[1]
         
         if can_process_functions.isWeatherValidator(statement):
-            _w = requests.get('')
-            api_key = "api_key"
-            # need gps infomation!
-            return "FAIL"
+            gps_coord = get_gps_from_string(statement)
+            weather_state = get_weather_from_gps(gps_coord)
+            return get_weather_string(weather_state)
