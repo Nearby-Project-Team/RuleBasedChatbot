@@ -62,12 +62,12 @@ class NearbyLogic:
     
     def process(self, statement: str, elderly_id: str):
         if not self.can_process(statement):
-            # chat_data = { 'data': statement }
-            # response = self.session.post(self.chatbotUrl, data=chat_data)
-            # _res = response.content.decode('utf-8')
-            # if len(_res) >= 60:
-            return "잘 모르겠어요." 
-            # return _res
+            chat_data = { 'data': statement }
+            response = self.session.post(self.chatbotUrl, data=chat_data)
+            _res = response.content.decode('utf-8')
+            if len(_res) >= 60:
+                return "잘 모르겠어요." 
+            return _res
         
         if can_process_functions.isScheduleValidator(statement):
             timeBuilder = TimeBuilder(statement)
