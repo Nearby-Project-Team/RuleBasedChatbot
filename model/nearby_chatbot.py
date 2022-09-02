@@ -4,9 +4,9 @@ from . import can_process_functions
 from model.time_builder import TimeBuilder
 from datetime import datetime
 import configparser
-import requests
 import random
 import os 
+from . import weather_functions as wf
 
 class NearbyLogic:
 
@@ -103,6 +103,6 @@ class NearbyLogic:
             return _f[1]
         
         if can_process_functions.isWeatherValidator(statement):
-            gps_coord = get_gps_from_string(statement)
-            weather_state = get_weather_from_gps(gps_coord)
-            return get_weather_string(weather_state)
+            coord = wf.get_coord_from_string(statement)
+            weather_state = wf.get_weather_from_coord(coord)
+            return wf.get_weather_string(weather_state)
