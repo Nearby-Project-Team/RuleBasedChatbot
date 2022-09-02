@@ -1,6 +1,7 @@
 import re
 import requests
 import datetime as dt
+import os
 
 def get_coord_from_statement(statement):
     target_cities = ["서울", "부산","인천","대구","대전",
@@ -20,7 +21,7 @@ def get_coord_from_statement(statement):
     return None
 
 def get_weather_from_coord(coord):
-    api_key = r'api_key'
+    api_key = os.environ['WEATHER_API']
     time_data = dt.datetime.now() - dt.timedelta(hours=1)
     base_date = time_data.strftime('%Y%m%d')
     base_time = time_data.strftime('%H') + '00'
