@@ -5,6 +5,7 @@ from model.time_builder import TimeBuilder
 from datetime import datetime
 import configparser
 import random
+import requests
 import os 
 from . import weather_functions as wf
 
