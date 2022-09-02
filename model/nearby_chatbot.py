@@ -102,14 +102,7 @@ class NearbyLogic:
             _f = random.choice(fortune)
             return _f[1]
         
-<<<<<<< HEAD
         if can_process_functions.isWeatherValidator(statement):
             coord = wf.get_coord_from_string(statement)
             weather_state = wf.get_weather_from_coord(coord)
             return wf.get_weather_string(weather_state)
-=======
-        # if can_process_functions.isWeatherValidator(statement):
-        #     gps_coord = get_gps_from_string(statement)
-        #     weather_state = get_weather_from_gps(gps_coord)
-        #     return get_weather_string(weather_state)
->>>>>>> fed3efc88518714bd2cfcff3287d9f9e196d4efd
