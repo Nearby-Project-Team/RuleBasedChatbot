@@ -6,6 +6,7 @@ from datetime import datetime
 import configparser
 import random
 import os 
+import requests
 from . import weather_functions as wf
 
 class NearbyLogic:
