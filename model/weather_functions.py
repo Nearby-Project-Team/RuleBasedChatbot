@@ -2,22 +2,18 @@ import re
 import requests
 import datetime as dt
 import os
+import pandas as pd
+
+trans_map = None
 
 def get_coord_from_statement(statement):
-    target_cities = ["서울", "부산","인천","대구","대전",
-    "광주","울산","세종",
-    "경기","강원","충청","충청북","충청남",
-    "전라","전라북","전라남",
-    "경상","경상북","경상남","제주"]
-    trans_coord = [(60, 127),(98, 76), (55, 124), (89, 90), (67, 100),
-    (58, 74),(102, 84),(66, 103),
-    (60, 120),(73, 134),(69, 107),(69, 107),(68, 100),
-    (63, 89),(63, 89),(51, 67),
-    (89, 91),(89, 91),(91, 77),(52, 38)
-    ]
-    for i in range(len(target_cities)):
-        if(re.search(target_cities[i],statement) is not None):
-            return trans_coord[i]
+    global trans_map
+    if(trans_map is None):
+        trans_map = pd.read_csv('weather_api_map.csv',header=None)
+    
+    for _, item in trans_map.iterrows():
+        if(re.search(item[0],statement) is not None):
+            return (item[1],(int(item[2]),int(item[3])))
     return None
 
 def get_weather_from_coord(coord):
@@ -85,21 +81,41 @@ def index_to_weather(weather_index):
 
     return ws  
 
-def get_weather_string(weather_state):
+def get_weather_string(local_name, weather_state):
     temp = weather_state[0]
     wthr = weather_state[1]
 
     temp = number_to_temp_hangul(temp)
     wthr = index_to_weather(wthr) 
-    return "현재 {}이고, {}.".format(temp,wthr)
+    return "{}의 온도는 현재 {}이고, {}.".format(local_name, temp,wthr)
 
 if __name__ == '__main__':
     coord = get_coord_from_statement('서울 날씨')
     print(coord)
-    weather_obj = get_weather_from_coord(coord)
+    weather_obj = get_weather_from_coord(coord[1])
     print(weather_obj)
     
-    print(get_weather_string((-10.2,3)))
-    weather_string = get_weather_string(weather_obj)
+    print(get_weather_string('서울', (-10.2,3)))
+    weather_string = get_weather_string(coord[0], weather_obj)
     print(weather_string)
 
+    coord = get_coord_from_statement('부산진구')
+    print(coord)
+    weather_obj = get_weather_from_coord(coord[1])
+    print(weather_obj)
+    print(get_weather_string(coord[0],weather_obj))
+
+    coord = get_coord_from_statement('강동구')
+    print(coord)
+    weather_obj = get_weather_from_coord(coord[1])
+    print(weather_obj)
+    print(get_weather_string(coord[0],weather_obj))
+
+    coord = get_coord_from_statement('인제')
+    print(coord)
+    weather_obj = get_weather_from_coord(coord[1])
+    print(weather_obj)
+    print(get_weather_string(coord[0],weather_obj))
+
+    coord = get_coord_from_statement('고성')
+    print(coord)
