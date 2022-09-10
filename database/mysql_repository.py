@@ -30,11 +30,11 @@ class CalandarRepository(StorageRepositoryEntity):
                 dateCondition = "'{}' <= ".format(sdate) + dateCondition
             if edate:
                 dateCondition = dateCondition + " <= '{}'".format(edate) 
-            query = 'SELECT {} FROM Calandar WHERE elderly_id="{}" AND {} AND notificationType=ONEOFF'.format(selectedColumns, elderly_id, dateCondition)
+            query = 'SELECT {} FROM Calendar WHERE elderly_id="{}" AND {} AND notificationType=ONEOFF'.format(selectedColumns, elderly_id, dateCondition)
         elif notificationType == NotificationType.REPEAT:
-            query = 'SELECT {} FROM Calandar WHERE elderly_id="{}" AND notificationType=REPEATATION'.format(selectedColumns, elderly_id)
+            query = 'SELECT {} FROM Calendar WHERE elderly_id="{}" AND notificationType=REPEATATION'.format(selectedColumns, elderly_id)
         else :
-            query = 'SELECT {} FROM Calandar WHERE elderly_id="{}"'.format(selectedColumns, elderly_id)
+            query = 'SELECT {} FROM Calendar WHERE elderly_id="{}"'.format(selectedColumns, elderly_id)
         return query
     
     def getIsNextInTime(self, regex: str, sdate: str, edate: str):
