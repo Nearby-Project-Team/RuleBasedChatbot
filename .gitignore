@@ -2,3 +2,4 @@
 db.**
 **.pickle
 config.ini
+model/weather_api_map.csv

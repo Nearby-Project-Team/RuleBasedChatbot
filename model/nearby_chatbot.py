@@ -104,6 +104,12 @@ class NearbyLogic:
             return _f[1]
         
         if can_process_functions.isWeatherValidator(statement):
-            coord = wf.get_coord_from_statement(statement)
-            weather_state = wf.get_weather_from_coord(coord)
-            return wf.get_weather_string(weather_state)
+            try:
+                coord = wf.get_coord_from_statement(statement)
+                if(coord is None):
+                    return "지역을 찾을 수 없습니다. 지역명은 시도구군 단위로 지원합니다. 또는 동일한 이름에 다른 지역구가 있어 검색되지 않을 수 있습니다."
+                
+                weather_state = wf.get_weather_from_coord(coord[1])
+                return wf.get_weather_string(coord[0], weather_state)
+            except:
+                return "날씨 API 오류로 날씨를 알 수 없습니다."
