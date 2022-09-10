@@ -9,7 +9,7 @@ trans_map = None
 def get_coord_from_statement(statement):
     global trans_map
     if(trans_map is None):
-        trans_map = pd.read_csv('weather_api_map.csv',header=None)
+        trans_map = pd.read_csv('../chatbot_data/weather_api_map.csv',header=None)
     
     for _, item in trans_map.iterrows():
         if(re.search(item[0],statement) is not None):
