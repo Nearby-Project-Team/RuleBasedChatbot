@@ -103,7 +103,7 @@ class NearbyLogic:
             _f = random.choice(fortune)
             return _f[1]
         
-        if can_process_functions.isWeatherValidator(statemusent):
+        if can_process_functions.isWeatherValidator(statement):
             try:
                 coord = wf.get_coord_from_statement(statement)
                 if(coord is None):
