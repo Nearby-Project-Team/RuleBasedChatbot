@@ -111,5 +111,6 @@ class NearbyLogic:
                 
                 weather_state = wf.get_weather_from_coord(coord[1])
                 return wf.get_weather_string(coord[0], weather_state)
-            except:
+            except Exception as e:
+                print(e)
                 return "날씨 API 오류로 날씨를 알 수 없습니다."
