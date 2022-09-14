@@ -51,7 +51,7 @@ def Alarm(host, port, username, password, db):
             with AlarmRepository(host=host, port=port, username=username, password=password, db=db) as aRepository:
                 if _c == "1":
                     _d = input("Statement > ")
-                    _s = input("Alarm Type > ")
+                    _s = input("Alarm Type > ") # ONEOFF/REPEATATION
                     aRepository.insertAlarm(_d, _s)
                     aRepository.complete()
                 elif _c == "2":
