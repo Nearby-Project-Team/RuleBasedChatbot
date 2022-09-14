@@ -119,3 +119,9 @@ if __name__ == '__main__':
 
     coord = get_coord_from_statement('고성')
     print(coord)
+
+    coord = get_coord_from_statement('동대문 온도 알려줘')
+    print(coord)
+    weather_obj = get_weather_from_coord(coord[1])
+    print(weather_obj)
+    print(get_weather_string(coord[0],weather_obj))
