@@ -73,6 +73,7 @@ class NearbyLogic:
         if can_process_functions.isScheduleValidator(statement):
             timeBuilder = TimeBuilder(statement)
             res = timeBuilder.process()
+            print(res)
             if not res:
                 return "잘 모르겠어요."
             s, e = res
