@@ -41,4 +41,6 @@ class TimeBuilder:
         elif self.isInPmStatement():
             self.sdate = "{}-{}-{} 12:00".format(now_time.year, now_time.month, now_time.day)
             self.edate = "{}-{}-{} 24:00".format(now_time.year, now_time.month, now_time.day)
+        else :
+            return None
         return self.sdate, self.edate
