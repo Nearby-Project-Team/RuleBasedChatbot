@@ -85,7 +85,8 @@ class NearbyLogic:
                 result += time_data + "에 " + text + " "
             for con in Repeat:
                 text, time = con
-                time_data = self.date_preprocessing(time)
+                print(time)
+                time_data = self.date_preprocessing(time.strftime('%Y-%m-%d %H:%M'))
                 result += time_data + "에 " + text + " "
             result += "입니다."
             return result
